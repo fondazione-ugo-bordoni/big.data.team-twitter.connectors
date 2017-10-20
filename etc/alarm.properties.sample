@@ -1,0 +1,37 @@
+#########################################
+#########################################
+# Config this file to set email alarms. #
+#########################################
+#########################################
+
+#Specifies if the alarm is set. Possible values: true|false
+alarm.email.enable=false
+
+#############################
+# Mail server configuration #
+#############################
+
+#IP address of the mailServer
+alarm.email.mailServer=
+
+#Username of the account to be used for authentication
+alarm.email.username=
+
+#Password of the account to be used for authentication
+alarm.email.password=
+
+#######################
+# Email configuration #
+#######################
+ 
+#Set "from_name" email field
+alarm.email.fromName=
+
+#Set "from_address" email field
+alarm.email.fromAddress=
+
+#Set "subject" email field
+alarm.email.subject= 
+
+#Specifies the recipients (email receivers) separated by commas
+alarm.email.toRecipients=

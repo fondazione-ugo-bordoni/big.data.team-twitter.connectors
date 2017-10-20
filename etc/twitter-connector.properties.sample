@@ -1,0 +1,34 @@
+####################################################
+####################################################
+# Config this file to configure Twitter connectors #
+####################################################
+####################################################
+
+# See https://apps.twitter.com
+twitter.consumerKey=
+twitter.consumerSecret=
+twitter.token=
+twitter.tokenSecret=
+
+twitter.includeEntities=true
+twitter.debugEnabled=false
+
+# Values (eventually, separated by commas): console, mongodb, kafka, daf-iot-kafka
+twitter.emitters=daf-iot-kafka
+
+# Values (eventually, separated by commas). Ex: it,en See https://dev.twitter.com/streaming/overview/request-parameters#language for more informations
+twitter.streaming.filter.languages=it
+
+
+# List of keyworks defining the streaming (more values separated by commas and without blanks).
+# Max 400 keywords (see https://developer.twitter.com/en/docs/tweets/filter-realtime/overview)
+twitter.streaming.filter.track.keywords=
+
+# List of twitter ids to be followed - 
+# Use http://tweeterid.com to revert a screen_name into a twitter id.
+# Max 5000 userids (see https://developer.twitter.com/en/docs/tweets/filter-realtime/overview)
+#twitter.streaming.filter.follow.ids=
+
+# To be documented
+twitter.streaming.filter.verification.period=30
+twitter.streaming.filter.verification.maxLossPercentage=20

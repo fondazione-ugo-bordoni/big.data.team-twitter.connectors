@@ -1,0 +1,17 @@
+<ivy-module version="2.0">
+    <info organisation="it.fub.bigdatalab" module="connectors"/>
+    <dependencies>
+		<dependency org="org.twitter4j" name="twitter4j-core" rev="4.0.2"/>
+		<dependency org="org.twitter4j" name="twitter4j-stream" rev="4.0.2" />
+		<dependency org="org.mongodb" name="mongo-java-driver" rev="2.8.0"/>
+		<dependency org="junit" name="junit" rev="4.11"/>
+		<dependency org="org.codemonkey.simplejavamail" name="simple-java-mail" rev="2.1"/>
+		<dependency org="commons-net" name="commons-net" rev="3.3"/>
+		<dependency org="net.sourceforge.javacsv" name="javacsv" rev="2.0"/>
+		<dependency org="httpunit" name="httpunit" rev="1.7"/>
+		<dependency org="com.googlecode.json-simple" name="json-simple" rev="1.1.1"/>
+		<dependency org="org.apache.kafka" name="kafka_2.10" rev="0.10.2.1"/>
+		<dependency org="org.apache.avro" name="avro" rev="1.7.5"/>
+		<dependency org="org.apache.avro" name="avro-tools" rev="1.7.5"/>
+    </dependencies>
+</ivy-module>
