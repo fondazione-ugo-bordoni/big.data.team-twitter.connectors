@@ -19,7 +19,6 @@ twitter.emitters=daf-iot-kafka
 # Values (eventually, separated by commas). Ex: it,en See https://dev.twitter.com/streaming/overview/request-parameters#language for more informations
 twitter.streaming.filter.languages=it
 
-
 # List of keyworks defining the streaming (more values separated by commas and without blanks).
 # Max 400 keywords (see https://developer.twitter.com/en/docs/tweets/filter-realtime/overview)
 twitter.streaming.filter.track.keywords=
