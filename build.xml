@@ -95,6 +95,8 @@
 	  <mkdir dir="${dir.dist.etc}"/>
 	  <mkdir dir="${dir.dist.log}"/>
       <mkdir dir="${dir.test.reports}"/>
+    	  <mkdir dir="${dir.docs}"/>
+    	  <mkdir dir="${dir.docs}/javadoc"/>
     </target>
 	
 	<!-- ================================= 
