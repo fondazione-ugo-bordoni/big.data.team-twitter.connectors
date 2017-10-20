@@ -1,0 +1,18 @@
+###################################################
+###################################################
+# Config this file to specifies Mongo DB settings #
+###################################################
+###################################################
+
+# MongoDB ip address
+mongodb.ip=
+
+# Name of the MongoDB database where to store tweets
+mongodb.db=twitter
+
+# Name of the MongoDB collection where to store tweets
+mongodb.collection.name=tweets
+
+# Number of tweets to collect before saving in MongoDB
+mongodb.buffersize=1000
+

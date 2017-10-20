@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ Copyright 2017 Fondazione Ugo Bordoni
+  
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+     
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -->
+
+<project name="Fub-BigdataPlatform-Connector" default="dist" basedir="./" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<description>
+		Compile and create dist directory.
+    </description>
+	
+    <!-- ================================= 
+          Properties              
+         ================================= -->
+	
+	<!--
+	 	Numero di versione del connettore.
+	 	Cambiare anche in sorgente it.fub.twitter.StreamingConnector.java
+	 	I numeri di versione devono essere coerenti.
+	-->
+	<property name="fub.twitter.release" value="2.1.0"/>
+
+	<property name="dir.base" value="./"/>
+	<property name="dir.bin" value="bin"/>
+	<property name="dir.build" value="build"/>
+	<property name="dir.docs" value="docs"/>
+	<property name="dir.etc" value="etc"/>
+	<property name="dir.test.reports" value="test-reports"/>
+	<property name="dir.lib" value="lib"/>
+
+	<property name="dir.src.core" value="src/main"/>
+	<property name="dir.src.test" value="src/test"/>
+	<property name="dir.javadoc" value="docs/javadoc"/>
+
+	<property name="dir.dist" value="dist"/>
+	<property name="dir.dist.bin" value="${dir.dist}/bin"/>
+	<property name="dir.dist.docs" value="${dir.dist}/docs"/>
+	<property name="dir.dist.javadoc" value="${dir.dist.docs}/javadoc"/>	
+	<property name="dir.dist.etc" value="${dir.dist}/etc"/>
+	<property name="dir.dist.lib" value="${dir.dist}/lib"/>
+	<property name="dir.dist.log" value="${dir.dist}/logs"/>
+	
+	<!-- here is the version of ivy we will use. change this property to try a newer 
+         version if you want -->
+
+	<property name="fub-twitter.jar" value="fub-twitter-connector-${fub.twitter.release}.jar"/>
+		
+	<!-- ================================= 
+	      Classpath items              
+	     ================================= -->
+	
+	<path id="compile.classpath" > 
+
+		<fileset dir="${dir.lib}" >
+			<include name="*.jar" />
+		</fileset>
+
+	</path> 
+
+	<path id="classpath.test">
+		<fileset dir="${dir.lib.test}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement location="${dir.build}" />
+		<path refid="compile.classpath" />
+	</path>
+	
+	<target name="bootstrap" description="Used to install the ivy task jar">
+	    <mkdir dir="${user.home}/.ant/lib"/>
+	    <get dest="${user.home}/.ant/lib/ivy.jar" src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar"/>
+	</target>
+	
+	<!-- ================================= 
+	     target: prepare              
+	     ================================= -->
+	
+    <target name="prepare" depends="clean">
+   	  <mkdir dir="${dir.build}"/>
+   	  <mkdir dir="${dir.lib}"/>
+  	  <mkdir dir="${dir.dist}"/>
+  	  <mkdir dir="${dir.dist.bin}"/>
+	  <mkdir dir="${dir.dist.lib}"/>
+	  <mkdir dir="${dir.dist.etc}"/>
+	  <mkdir dir="${dir.dist.log}"/>
+      <mkdir dir="${dir.test.reports}"/>
+    </target>
+	
+	<!-- ================================= 
+	     target: clean              
+	     ================================= -->
+	
+	<target name="clean" description="Remove all generated files.">		
+		<delete dir="${dir.build}" />
+		<delete dir="${dir.dist}" />
+		<delete dir="${dir.test.reports}"/>
+	</target>
+	
+	
+    <!-- ================================= 
+          target: compile              
+         ================================= -->
+	
+    <target name="compile" depends="prepare,resolve" description="Compiles all source files.">
+    
+    	<javac srcdir="${dir.src.core}" destdir="${dir.build}" target="1.6">
+    	  		<classpath refid="compile.classpath" />
+    	  		<include name="**/*.java"/>
+				<exclude name="**/*Test.java"/>
+    	</javac>    	
+    
+    </target>
+
+	<target name="compile-test" depends="compile">
+		<javac srcdir="${dir.src.test}" destdir="${dir.build}">
+			<classpath refid="classpath.test" />
+			<include name="**/*.java" />
+		</javac>
+	</target>
+
+
+    <!-- ================================= 
+          target: dist
+         ================================= -->
+	
+	<target name="dist" depends="compile" description="Creates dist directory">
+
+		<copy todir="${dir.build}">
+			<fileset dir="${dir.etc}" />
+		</copy>
+
+		<jar destfile="${dir.dist.lib}/${fub-twitter.jar}" basedir="${dir.build}"/>	   
+
+		
+		<!--exec executable="cp">
+							<arg value="-p" />
+							<arg value="${dir.bin}/mongoDBCounter.sh" />	
+							<arg value="${dir.dist.bin}/mongoDBCounter" />
+		</exec>
+		
+		<exec executable="cp">
+							<arg value="-p" />
+							<arg value="${dir.bin}/mongo2json.sh" />
+							<arg value="${dir.dist.bin}/mongo2json" />
+		</exec>
+		
+		<exec executable="cp">
+									<arg value="-p" />
+									<arg value="${dir.bin}/mongo2Terrier.sh" />
+									<arg value="${dir.dist.bin}/mongo2Terrier" />
+		</exec-->
+		
+		<exec executable="cp">
+							<arg value="-p" />
+							<arg value="${dir.bin}/run_twitter_connector.sh" />
+							<arg value="${dir.dist.bin}/run_twitter_connector" />
+		</exec>
+		
+		<copy todir="${dir.dist.docs}">
+			<fileset dir="${dir.docs}" />
+		</copy>
+
+		<copy todir="${dir.dist.etc}">
+			<fileset dir="${dir.etc}" />
+		</copy>
+
+		<copy todir="${dir.dist.lib}">
+			<fileset dir="${dir.lib}" />
+		</copy>
+
+		<copy todir="${dir.dist.javadoc}">
+			<fileset dir="${dir.javadoc}" />
+		</copy>
+				
+	</target>
+
+
+    <!-- ================================= 
+          target: javadoc
+         ================================= -->
+
+	<target name="javadoc" depends="compile" description="generates javadocs">
+		<echo message="${dir.src.core}"/>
+		
+		<javadoc  
+		      use='true' author='true'  version='true'
+		      overview='overview.html'  
+		      access='package' 
+		      sourcepath='${dir.src.core}'
+		      packagenames='*.*' 
+		      destdir='${dir.dist.javadoc}'
+		      windowtitle='Fub - Twitter - Connector'
+		      noqualifier='java.*:javax.*:com.sun.*'   
+		      linksource='true'
+		   />
+		
+	</target>
+
+
+    <!-- ================================= 
+          target: test
+         ================================= -->
+
+	<target name="test" depends="compile-test" description="Runs all junit tests.">
+
+		<junit printsummary="on" fork="false" haltonfailure="false" failureproperty="tests.failed" showoutput="true">
+
+			<classpath refid="classpath.test" />
+
+			<formatter type="xml" usefile="true"/>
+
+			<batchtest todir="${dir.test.reports}">
+				<fileset dir="${dir.build}" includes="**/*Test.class" />
+			</batchtest>
+
+		</junit>
+
+		<junitreport todir="${dir.test.reports}">
+			<fileset dir="${dir.test.reports}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report todir="${dir.test.reports}" />
+		</junitreport>
+		
+		<fail if="tests.failed">
+			One or more tests failed... Check text file for more details.
+		</fail>
+	</target>
+
+
+	<!-- ================================= 
+          target: download-ivy
+         ================================= -->
+
+	<target name="resolve" description="--> retrieve dependencies with ivy">
+		        <ivy:retrieve />
+	</target>
+		
+</project>

@@ -1,0 +1,12 @@
+###################################################
+###################################################
+# Config this file to specifies the DAF settings. #
+###################################################
+###################################################
+# 
+# This kind of connector wraps tweets in iot event objects 
+# See: https://github.com/italia/daf/tree/master/iot_ingestion_manager
+#
+
+kafka.bootstrap.servers=localhost:9092
+kafka.topic=daf-twitter
