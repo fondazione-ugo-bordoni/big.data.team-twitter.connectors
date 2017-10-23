@@ -16,7 +16,7 @@
  limitations under the License.
  -->
 
-<project name="Fub-BigdataPlatform-Connector" default="dist" basedir="./" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="fub-bigdataplatform-connector" default="dist" basedir="./" xmlns:ivy="antlib:org.apache.ivy.ant">
 	<description>
 		Compile and create dist directory.
     </description>
@@ -30,7 +30,7 @@
 	 	Cambiare anche in sorgente it.fub.twitter.StreamingConnector.java
 	 	I numeri di versione devono essere coerenti.
 	-->
-	<property name="fub.twitter.release" value="2.1.0"/>
+	<property name="fub.twitter.release" value="1.0"/>
 
 	<property name="dir.base" value="./"/>
 	<property name="dir.bin" value="bin"/>
@@ -39,6 +39,7 @@
 	<property name="dir.etc" value="etc"/>
 	<property name="dir.test.reports" value="test-reports"/>
 	<property name="dir.lib" value="lib"/>
+	<property name="dir.download" value="download"/>
 
 	<property name="dir.src.core" value="src/main"/>
 	<property name="dir.src.test" value="src/test"/>
@@ -97,6 +98,7 @@
       <mkdir dir="${dir.test.reports}"/>
     	  <mkdir dir="${dir.docs}"/>
     	  <mkdir dir="${dir.docs}/javadoc"/>
+    	  <mkdir dir="${dir.download}"/>
     </target>
 	
 	<!-- ================================= 
@@ -105,6 +107,7 @@
 	
 	<target name="clean" description="Remove all generated files.">		
 		<delete dir="${dir.build}" />
+		<delete dir="${dir.download}" />
 		<delete dir="${dir.dist}" />
 		<delete dir="${dir.test.reports}"/>
 	</target>
@@ -185,6 +188,14 @@
 			<fileset dir="${dir.javadoc}" />
 		</copy>
 				
+		<zip destfile="${dir.download}/${ant.project.name}-${fub.twitter.release}.zip"
+		       basedir="${dir.dist}"
+		       update="true"
+		  />
+		<tar destfile="${dir.download}/${ant.project.name}-${fub.twitter.release}.tar.gz" compression="gzip">
+		  <zipfileset src="${dir.download}/${ant.project.name}-${fub.twitter.release}.zip"/>
+		</tar>
+	
 	</target>
 
 

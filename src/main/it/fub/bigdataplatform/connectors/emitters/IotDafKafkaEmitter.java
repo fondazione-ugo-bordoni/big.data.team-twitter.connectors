@@ -40,28 +40,18 @@ import it.gov.daf.iotingestion.event.Event;
 public class IotDafKafkaEmitter implements Emitter{
 
 	private Properties props;
-	//private Properties kafkaProps;
+	private Properties kafkaProps;
 	private KafkaProducer<byte[],byte[]> producer;
 
 	public void KafkaEmitter(){
 			//TODO CAPIRE PERCHE' NON POSSO INIZIALIZZARE NEL COSTRUTTORE LE PROPRIETA'
-			// DELL'EMITTER. SEMBRA SOVRASCRIVERE LE PROPRIETA' DEL CONNETTORE (?!?)
-		props = Configuration.loadProps("../etc/iot-daf-kafka.properties");
-		
-		Properties kafkaProps = new Properties();
-		kafkaProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, props.getProperty("kafka.bootstrap.servers"));
-		kafkaProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ByteArraySerializer.class.getName());
-		kafkaProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, ByteArraySerializer.class.getName());
-		
-		producer = new KafkaProducer<byte[], byte[]>(kafkaProps);
-		System.out.println("Producer instanziato " + producer);
-		
+			// DELL'EMITTER. SEMBRA SOVRASCRIVERE LE PROPRIETA' DEL CONNETTORE (?!?)		
 	}
 	
 	@Override
 	public void emit(JSONObject jsonObject) {
 
-	/*	props = Configuration.loadProps("../etc/iot-daf-kafka.properties");
+		props = Configuration.loadProps("../etc/iot-daf-kafka.properties");
 		
 		kafkaProps = new Properties();
 		kafkaProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, props.getProperty("kafka.bootstrap.servers"));
@@ -70,8 +60,8 @@ public class IotDafKafkaEmitter implements Emitter{
 	
 		
 		KafkaProducer<byte[],byte[]> producer = new KafkaProducer<byte[], byte[]>(kafkaProps); 		
-	*/		
-		System.out.println("emitting");
+			
+		System.out.println("jsonObject");
 		String topic =  props.getProperty("kafka.topic");
 		IoTDafEvent event = new IoTDafEvent();
 
@@ -80,14 +70,12 @@ public class IotDafKafkaEmitter implements Emitter{
 		ProducerRecord<byte[],byte[]> record = new ProducerRecord<byte[],byte[]>(topic, event.id, event.payload); 
 	
 		producer.send(record);
-		producer.flush();
-	//	producer.close();
+		producer.close();
 		
 	}
 
 	@Override
 	public void finalize(){
-		producer.close();
 	}
 	
 	private class IoTDafEvent{
