@@ -8,3 +8,5 @@ etc/kafka.properties
 etc/mongodb.properties
 
 etc/twitter-connector.properties
+
+*.jar
