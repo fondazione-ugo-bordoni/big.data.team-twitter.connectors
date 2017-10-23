@@ -107,7 +107,6 @@
 	
 	<target name="clean" description="Remove all generated files.">		
 		<delete dir="${dir.build}" />
-		<delete dir="${dir.download}" />
 		<delete dir="${dir.dist}" />
 		<delete dir="${dir.test.reports}"/>
 	</target>
@@ -146,25 +145,6 @@
 		</copy>
 
 		<jar destfile="${dir.dist.lib}/${fub-twitter.jar}" basedir="${dir.build}"/>	   
-
-		
-		<!--exec executable="cp">
-							<arg value="-p" />
-							<arg value="${dir.bin}/mongoDBCounter.sh" />	
-							<arg value="${dir.dist.bin}/mongoDBCounter" />
-		</exec>
-		
-		<exec executable="cp">
-							<arg value="-p" />
-							<arg value="${dir.bin}/mongo2json.sh" />
-							<arg value="${dir.dist.bin}/mongo2json" />
-		</exec>
-		
-		<exec executable="cp">
-									<arg value="-p" />
-									<arg value="${dir.bin}/mongo2Terrier.sh" />
-									<arg value="${dir.dist.bin}/mongo2Terrier" />
-		</exec-->
 		
 		<exec executable="cp">
 							<arg value="-p" />
@@ -188,21 +168,23 @@
 			<fileset dir="${dir.javadoc}" />
 		</copy>
 				
-		<zip destfile="${dir.download}/${ant.project.name}-${fub.twitter.release}.zip"
-		       basedir="${dir.dist}"
-		       update="true"
-		  />
-		<tar destfile="${dir.download}/${ant.project.name}-${fub.twitter.release}.tar.gz" compression="gzip">
-		  <zipfileset src="${dir.download}/${ant.project.name}-${fub.twitter.release}.zip"/>
-		</tar>
-	
 	</target>
 
+	<target name="create-compressed">
+		<zip destfile="${dir.download}/${ant.project.name}-${fub.twitter.release}.zip"
+			       basedir="${dir.dist}"
+			       update="true"
+			  />
+			
+			<tar destfile="${dir.download}/${ant.project.name}-${fub.twitter.release}.tar.gz" compression="gzip">
+			  <zipfileset src="${dir.download}/${ant.project.name}-${fub.twitter.release}.zip"/>
+			</tar>
+	</target>
 
     <!-- ================================= 
           target: javadoc
          ================================= -->
-
+	
 	<target name="javadoc" depends="compile" description="generates javadocs">
 		<echo message="${dir.src.core}"/>
 		
