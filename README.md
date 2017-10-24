@@ -63,3 +63,6 @@ To rebuild the application launch the following command:
 `ant -dist`
 
 The *dist* directory will contain the compiled version of the application.
+
+## DAF integration
+This application can be used to ingest the [Data & Analytics Framework](https://daf-docs.readthedocs.io/en/latest/) project (DAF). See [here](./DAF.md) for more info.

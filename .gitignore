@@ -10,3 +10,4 @@ etc/mongodb.properties
 etc/twitter-connector.properties
 
 *.jar
+/build/
